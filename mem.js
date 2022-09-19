@@ -1,6 +1,6 @@
 function toggleImg(i,myImg) {
   console.log(myImg.src);
-  console.log(arrayCurrentStates[i]);
+  console.log("line 3: " arrayCurrentStates[i]);
   if (arrayCurrentStates[i] == 0) {  //current tile is blank
     arrayCurrentValues[i] = arrayHiddenValues[i]; //flip the tile image
     arrayCurrentStates[i] = 1; // tile is flipped
@@ -14,15 +14,18 @@ function toggleImg(i,myImg) {
   //check if there is a tile already flipped for matching
   if (flippedTile < 0) {  // no tile other is flipped for matching
     flippedTile = i;
-
+    console.log("new flip"+flippedTile);
   }
-  else {// compare the two flipped Tiles
+  else if ( i == flippedTile ){ // compare the two flipped Tiles so long they are different
+    console.log("Comparing");
     if (arrayCurrentValues[i] == arrayCurrentValues[flippedTile]) { // we got a match
       arrayCurrentStates[i] = 2 ;
       arrayCurrentStates[flippedTile] = 2 ;
       pairsToSolve = pairsToSolve -1 ;
+      console.log("Solved");
     }
     else { // no match, flip the tiles back & reset the state of the tiles
+      console.log("Failed");
       arrayCurrentStates[i] = 0 ;
       arrayCurrentValues[i] = blankImg;
 
@@ -31,11 +34,10 @@ function toggleImg(i,myImg) {
 //      oldImg = document.getElementById("tile_icon_" + flippedTile);
 //      oldImg.src = arrayCurrentValues[flippedTile];
     }
-    console.log(arrayCurrentValues[i]);
-    myImg.src = arrayCurrentValues[i];  //set the new image
-    console.log(myImg.src);
-
   }
+  console.log(arrayCurrentValues[i]);
+  myImg.src = arrayCurrentValues[i];  //set the new image
+  console.log(myImg.src);
 }
 
 //enable mouse click on Tiles
