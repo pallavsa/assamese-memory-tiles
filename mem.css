@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #d7f4ed;
+}
+
+.tile {
+  display: block;
+  float: left;
+  border-radius: 5%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.tile:nth-of-type(4n + 1) {
+  clear: left;
+}
+
+.im {
+  padding: 2px;
+  width: 100px;
+  height: 100px;
+}
+
+.tile_container {
+  overflow: hidden;
+  width: 90vmin;
+  height: 90vmin;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid green;
+  border-radius: 5px;
+}
