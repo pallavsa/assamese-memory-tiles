@@ -1,49 +1,54 @@
 function toggleImg(i,myImg) {
+  if ( i == flippedTile ) { //if you click on currently revealed file, do nothing
+    return;
+  }
+  if (arrayCurrentStates[i] == 2) { //already solved, do nothing
+    return;
+  }
+
   console.log(myImg.src);
-  console.log("line 3: " arrayCurrentStates[i]);
+  console.log("line 3: " + arrayCurrentStates[i]);
+
   if (arrayCurrentStates[i] == 0) {  //current tile is blank
     arrayCurrentValues[i] = arrayHiddenValues[i]; //flip the tile image
     arrayCurrentStates[i] = 1; // tile is flipped
     console.log("State 0, flippedTile:"+flippedTile);
+    myImg.src = arrayCurrentValues[i];
   }
-//  else if (arrayCurrentStates[i] == 1) { //already the tile is revealed
-//    arrayCurrentValues[i] = blankImg;
-//    arrayCurrentStates[i] = 0; // tile is flipped
-//  }
 
   //check if there is a tile already flipped for matching
   if (flippedTile < 0) {  // no tile other is flipped for matching
     flippedTile = i;
     console.log("new flip"+flippedTile);
   }
-  else if ( i == flippedTile ){ // compare the two flipped Tiles so long they are different
+  else { // compare the two flipped Tiles so long they are different
     console.log("Comparing");
     if (arrayCurrentValues[i] == arrayCurrentValues[flippedTile]) { // we got a match
       arrayCurrentStates[i] = 2 ;
       arrayCurrentStates[flippedTile] = 2 ;
       pairsToSolve = pairsToSolve -1 ;
+      flippedTile = -1;
       console.log("Solved");
     }
     else { // no match, flip the tiles back & reset the state of the tiles
       console.log("Failed");
-      arrayCurrentStates[i] = 0 ;
-      arrayCurrentValues[i] = blankImg;
+      setTimeout(function() {
+        arrayCurrentStates[i] = 0 ;
+        arrayCurrentValues[i] = blankImg;
+        myImg.src = arrayCurrentValues[i];
 
-      arrayCurrentStates[flippedTile] = 2 ;
-      arrayCurrentValues[flippedTile] = blankImg;
-//      oldImg = document.getElementById("tile_icon_" + flippedTile);
-//      oldImg.src = arrayCurrentValues[flippedTile];
+        arrayCurrentStates[flippedTile] = 0 ;
+        arrayCurrentValues[flippedTile] = blankImg;
+
+        var oldImg = document.getElementById("tile_icon_" + flippedTile);
+        oldImg.src = arrayCurrentValues[flippedTile];
+        flippedTile = -1;
+      }, 1000);
     }
   }
-  console.log(arrayCurrentValues[i]);
-  myImg.src = arrayCurrentValues[i];  //set the new image
-  console.log(myImg.src);
 }
 
 //enable mouse click on Tiles
-
-//This function adds the selected class of a selected tile
-
 function add_elem(i) {
   document.getElementById("tile_icon_" + i).onclick = function() {
     var myImg=document.getElementById("tile_icon_" + i);
