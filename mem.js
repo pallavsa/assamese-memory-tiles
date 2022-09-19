@@ -1,3 +1,28 @@
+
+//variables
+const blankImg="img/00-00.jpg";
+const winMessageItem = "overlay_win";
+var arrayHiddenValues = []; //shuffle the tiles
+var arrayCurrentValues = []; //running value the tiles
+var arrayCurrentStates = [];  //running state the tiles : 0 : blank, 1 : exposed, 2 : solved
+var flippedTile; //track the already flipped image, if none flipped, set to -1
+var pairsToSolve; //track how many pairs remain to solve
+
+
+function add_class(id, cl) {
+  var elem = document.getElementById(id);
+  if (elem.classList.contains(cl) !== true) {
+    elem.classList.add(cl);
+  }
+}
+
+function rem_class(id, cl) {
+  var elem = document.getElementById(id);
+  if (elem.classList.contains(cl) === true) {
+    elem.classList.remove(cl);
+  }
+}
+
 function toggleImg(i,myImg) {
   if ( i == flippedTile ) { //if you click on currently revealed file, do nothing
     return;
@@ -29,6 +54,10 @@ function toggleImg(i,myImg) {
       pairsToSolve = pairsToSolve -1 ;
       flippedTile = -1;
       console.log("Solved");
+      if (pairsToSolve == 0) {
+        add_class(winMessageItem, "overlay_win_open");
+      }
+
     }
     else { // no match, flip the tiles back & reset the state of the tiles
       console.log("Failed");
@@ -106,17 +135,14 @@ function reset() {
     arrayCurrentValues[i]=blankImg;  //reset tile attributes to blank image
     add_elem(i);  //add the on triggers (onClick)
   }
-//  console.log(arrayHiddenValues);
-//  console.log(arrayCurrentValues);
-//  console.log(arrayCurrentStates);
-}
-//do stuff here
 
-//variables
-const blankImg="img/00-00.jpg";
-var arrayHiddenValues = []; //shuffle the tiles
-var arrayCurrentValues = []; //running value the tiles
-var arrayCurrentStates = [];  //running state the tiles : 0 : blank, 1 : exposed, 2 : solved
-var flippedTile; //track the already flipped image, if none flipped, set to -1
-var pairsToSolve; //track how many pairs remain to solve
+  rem_class(winMessageItem, "overlay_win_open"); //hide message
+}
+
+//add reset function
+document.getElementById(winMessageItem).onclick = function() {
+  reset();
+};
+
+//actual flow starts here
 reset();
