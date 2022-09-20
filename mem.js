@@ -2,6 +2,32 @@
 //variables
 const blankImg="img/00-00.jpg";
 const winMessageItem = "overlay_win";
+
+const htmlContainer =
+`
+<div class="tile_container">
+  <div class="tile"><img id="tile_0"  class="im" /></div>
+  <div class="tile"><img id="tile_1"  class="im" /></div>
+  <div class="tile"><img id="tile_2"  class="im" /></div>
+  <div class="tile"><img id="tile_3"  class="im" /></div>
+  <div class="tile"><img id="tile_4"  class="im" /></div>
+  <div class="tile"><img id="tile_5"  class="im" /></div>
+  <div class="tile"><img id="tile_6"  class="im" /></div>
+  <div class="tile"><img id="tile_7"  class="im" /></div>
+  <div class="tile"><img id="tile_8"  class="im" /></div>
+  <div class="tile"><img id="tile_9"  class="im" /></div>
+  <div class="tile"><img id="tile_10" class="im" /></div>
+  <div class="tile"><img id="tile_11" class="im" /></div>
+  <div class="tile"><img id="tile_12" class="im" /></div>
+  <div class="tile"><img id="tile_13" class="im" /></div>
+  <div class="tile"><img id="tile_14" class="im" /></div>
+  <div class="tile"><img id="tile_15" class="im" /></div>
+  <div class="overlay_win" id="overlay_win">
+    <h2>You win!</h2>
+    <div id="replay">Play again</div>
+  </div>
+</div>
+`;
 var arrayHiddenValues = []; //shuffle the tiles
 var arrayCurrentValues = []; //running value the tiles
 var arrayCurrentStates = [];  //running state the tiles : 0 : blank, 1 : exposed, 2 : solved
@@ -136,10 +162,14 @@ function reset() {
   rem_class(winMessageItem, "overlay_win_open"); //hide message
 }
 
+
+
+//actual flow starts here
+//create htmlContainer
+document.body.innerHTML = htmlContainer;
 //add reset function
 document.getElementById(winMessageItem).onclick = function() {
   reset();
 };
-
-//actual flow starts here
+//reset counters & tiles
 reset();
