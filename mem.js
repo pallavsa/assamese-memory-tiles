@@ -69,7 +69,7 @@ function toggleImg(i,myImg) {
         arrayCurrentStates[flippedTile] = 0 ;
         arrayCurrentValues[flippedTile] = blankImg;
 
-        var oldImg = document.getElementById("tile_icon_" + flippedTile);
+        var oldImg = document.getElementById("tile_" + flippedTile);
         oldImg.src = arrayCurrentValues[flippedTile];
         flippedTile = -1;
       }, 1000);
@@ -79,8 +79,8 @@ function toggleImg(i,myImg) {
 
 //enable mouse click on Tiles
 function add_elem(i) {
-  document.getElementById("tile_icon_" + i).onclick = function() {
-    var myImg=document.getElementById("tile_icon_" + i);
+  document.getElementById("tile_" + i).onclick = function() {
+    var myImg=document.getElementById("tile_" + i);
     console.log(myImg);
     toggleImg(i,myImg);
   }
@@ -104,22 +104,19 @@ function shuffle() {
 
 //set the tile image (for testing)
 function shuffleImg() {
-  var myImgPrfx="tile_icon_";
-  var myImgName;
-  var myImg;
+//  var myImgPrfx="tile_";
+//  var myImgName;
+//  var myImg;
   var A = shuffle();
 
   for (i = 0; i < 16; i++) {
-    //myImgName = myImgPrfx+i;
-    //myImg = document.getElementById(myImgName);
-    //myImg.src = "img/02-0"+ A[i] + ".jpg";
     arrayHiddenValues[i] = "img/02-0"+ A[i] + ".jpg";
   }
 }
 
 //reset everything
 function reset() {
-  var myImgPrfx="tile_icon_";
+  var myImgPrfx="tile_";
   var myImgName;
   var myImg;
 

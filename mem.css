@@ -24,13 +24,12 @@ body {
 
 .tile_container {
   overflow: hidden;
-  width: 90vmin;
-  height: 90vmin;
+  width: 418px;
+  height: 418px;
   margin-left: auto;
   margin-right: auto;
   border: 2px solid green;
   border-radius: 5px;
-  align-content: center;
 }
 
 /*Overlay*/
