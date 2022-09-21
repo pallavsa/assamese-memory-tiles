@@ -1,8 +1,8 @@
 
 //variables
-const blankImg="img/00-00.jpg";
 const winMessageItem = "overlay_win";
-
+const imgIdPrfx = "tile_";
+//define the html code block in js
 const htmlContainer =
 `
 <div class="tile_container">
@@ -95,7 +95,7 @@ function toggleImg(i,myImg) {
         arrayCurrentStates[flippedTile] = 0 ;
         arrayCurrentValues[flippedTile] = blankImg;
 
-        var oldImg = document.getElementById("tile_" + flippedTile);
+        var oldImg = document.getElementById(imgIdPrfx + flippedTile);
         oldImg.src = arrayCurrentValues[flippedTile];
         flippedTile = -1;
       }, 1000);
@@ -105,15 +105,15 @@ function toggleImg(i,myImg) {
 
 //enable mouse click on Tiles
 function add_elem(i) {
-  document.getElementById("tile_" + i).onclick = function() {
-    var myImg=document.getElementById("tile_" + i);
+  document.getElementById(imgIdPrfx + i).onclick = function() {
+    var myImg=document.getElementById(imgIdPrfx + i);
     console.log(myImg);
     toggleImg(i,myImg);
   }
 }
 
 //This function shuffles the tiles
-//set the tile array
+//set the tile array with image IDs
 function shuffle() {
   var j;
   var t;
@@ -128,22 +128,16 @@ function shuffle() {
   return A;
 }
 
-//set the tile image (for testing)
+//set the tile image tied to each tile
 function shuffleImg() {
-//  var myImgPrfx="tile_";
-//  var myImgName;
-//  var myImg;
   var A = shuffle();
-
   for (i = 0; i < 16; i++) {
-    arrayHiddenValues[i] = "img/02-0"+ A[i] + ".jpg";
+    arrayHiddenValues[i] = pathQuizImg + A[i] + ".jpg";
   }
 }
 
 //reset everything
 function reset() {
-  var myImgPrfx="tile_";
-  var myImgName;
   var myImg;
 
   flippedTile = -1;  //none of the tiles are flipped
@@ -151,8 +145,7 @@ function reset() {
 
   shuffleImg()
   for (i = 0; i < 16; i++) {
-    myImgName = myImgPrfx+i;
-    myImg = document.getElementById(myImgName);
+    myImg = document.getElementById(imgIdPrfx+i);
     myImg.src = blankImg; //set tile to blank image
     arrayCurrentStates[i] = 0; //reset all tiles state to 0
     arrayCurrentValues[i]=blankImg;  //reset tile attributes to blank image
@@ -161,8 +154,6 @@ function reset() {
 
   rem_class(winMessageItem, "overlay_win_open"); //hide message
 }
-
-
 
 //actual flow starts here
 //create htmlContainer
