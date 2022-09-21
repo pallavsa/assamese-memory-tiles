@@ -132,7 +132,8 @@ function shuffle() {
 function shuffleImg() {
   var A = shuffle();
   for (i = 0; i < 16; i++) {
-    arrayHiddenValues[i] = pathQuizImg + A[i] + ".jpg";
+    let B = A[i] + letterRangeStart;
+    arrayHiddenValues[i] = pathQuizImg + B + ".jpg";
   }
 }
 
