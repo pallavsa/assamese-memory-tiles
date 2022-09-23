@@ -3,37 +3,31 @@
 const winMessageItem = "overlay_win";
 const imgIdPrfx = "tile_";
 //define the html code block in js
-const htmlContainer =
-`
-<div class="tile_container">
-  <div class="tile"><img id="tile_0"  class="im" /></div>
-  <div class="tile"><img id="tile_1"  class="im" /></div>
-  <div class="tile"><img id="tile_2"  class="im" /></div>
-  <div class="tile"><img id="tile_3"  class="im" /></div>
-  <div class="tile"><img id="tile_4"  class="im" /></div>
-  <div class="tile"><img id="tile_5"  class="im" /></div>
-  <div class="tile"><img id="tile_6"  class="im" /></div>
-  <div class="tile"><img id="tile_7"  class="im" /></div>
-  <div class="tile"><img id="tile_8"  class="im" /></div>
-  <div class="tile"><img id="tile_9"  class="im" /></div>
-  <div class="tile"><img id="tile_10" class="im" /></div>
-  <div class="tile"><img id="tile_11" class="im" /></div>
-  <div class="tile"><img id="tile_12" class="im" /></div>
-  <div class="tile"><img id="tile_13" class="im" /></div>
-  <div class="tile"><img id="tile_14" class="im" /></div>
-  <div class="tile"><img id="tile_15" class="im" /></div>
-  <div class="overlay_win" id="overlay_win">
-    <h2>You win!</h2>
-    <div id="replay">Play again</div>
-  </div>
-</div>
-`;
+var htmlContainer ;
 var arrayHiddenValues = []; //shuffle the tiles
 var arrayCurrentValues = []; //running value the tiles
 var arrayCurrentStates = [];  //running state the tiles : 0 : blank, 1 : exposed, 2 : solved
 var flippedTile; //track the already flipped image, if none flipped, set to -1
 var pairsToSolve; //track how many pairs remain to solve
 
+let letterend = 60;
+let squareSize = 4;
+function createHtmlBlock () {
+  let containerClass="tile_container";
+  let tileClass="tile";
+  htmlContainer  = `  <div class="`+containerClass+`">`;
+  for (i = 0; i < squareSize*squareSize; i++) {
+    htmlContainer += `    <div class="`+tileClass+`"><img id="tile_`+i+`"  class="im" /></div>`;
+  }
+  htmlContainer += `
+    <div class="overlay_win" id="overlay_win">
+      <h2>You win!</h2>
+      <div id="replay">Play again</div>
+    </div>
+  </div>
+  `;
+  return htmlContainer;
+}
 
 function add_class(id, cl) {
   var elem = document.getElementById(id);
@@ -115,11 +109,16 @@ function add_elem(i) {
 //This function shuffles the tiles
 //set the tile array with image IDs
 function shuffle() {
-  var j;
-  var t;
-  var A = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8];
+  let j;
+  let t;
+  let A = [];
 
-  for (i = 0; i < 16; i++) {
+  for (i = 0; i < (squareSize*squareSize/2); i++) {
+    A[i] = Math.ceil(Math.random() * letterend);
+  }
+  A.push(...A);
+  console.log(A);
+  for (i = 0; i < squareSize*squareSize; i++) {
     j = Math.floor(Math.random() * (i + 1));
     t = A[i];
     A[i] = A[j];
@@ -158,7 +157,7 @@ function reset() {
 
 //actual flow starts here
 //create htmlContainer
-document.body.innerHTML = htmlContainer;
+document.body.innerHTML = createHtmlBlock ();
 //add reset function
 document.getElementById(winMessageItem).onclick = function() {
   reset();
