@@ -4,7 +4,20 @@ body {
   background-color: #d7f4ed;
 }
 
-.tile {
+/* Core play area container,
+different classes depeneding on how may boxes we put */
+
+.tile_container_4 {
+  overflow: hidden;
+  width: 418px;
+  height: 418px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid green;
+  border-radius: 5px;
+}
+
+.tile_4 {
   display: block;
   float: left;
   border-radius: 5%;
@@ -12,7 +25,7 @@ body {
   position: relative;
   cursor: pointer;
 }
-.tile:nth-of-type(4n + 1) {
+.tile_4:nth-of-type(4n + 1) {
   clear: left;
 }
 
@@ -22,15 +35,7 @@ body {
   height: 100px;
 }
 
-.tile_container {
-  overflow: hidden;
-  width: 418px;
-  height: 418px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 2px solid green;
-  border-radius: 5px;
-}
+
 
 /*Overlay*/
 

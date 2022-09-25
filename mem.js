@@ -13,8 +13,8 @@ var pairsToSolve; //track how many pairs remain to solve
 let letterend = 60;
 let squareSize = 4;
 function createHtmlBlock () {
-  let containerClass="tile_container";
-  let tileClass="tile";
+  let containerClass="tile_container_"+squareSize;
+  let tileClass="tile_"+squareSize;
   htmlContainer  = `  <div class="`+containerClass+`">`;
   for (i = 0; i < squareSize*squareSize; i++) {
     htmlContainer += `    <div class="`+tileClass+`"><img id="tile_`+i+`"  class="im" /></div>`;
