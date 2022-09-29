@@ -2,6 +2,8 @@
 //variables
 const winMessageItem = "overlay_win";
 const imgIdPrfx = "tile_";
+
+var attemptCount = 0;
 //define the html code block in js
 var htmlContainer ;
 var arrayHiddenValues = []; //shuffle the tiles
@@ -11,7 +13,7 @@ var flippedTile; //track the already flipped image, if none flipped, set to -1
 var pairsToSolve; //track how many pairs remain to solve
 
 let letterend = 60;
-let squareSize = 4;
+let squareSize = 6;
 function createHtmlBlock () {
   let containerClass="tile_container_"+squareSize;
   let tileClass="tile_"+squareSize;
@@ -24,6 +26,10 @@ function createHtmlBlock () {
       <h2>You win!</h2>
       <div id="replay">Play again</div>
     </div>
+  </div>
+  <div class="count_container">
+    <div class="count_text" id="count"> Attemp count: </div>
+    <div class="button">Restart </div>
   </div>
   `;
   return htmlContainer;
@@ -101,7 +107,9 @@ function toggleImg(i,myImg) {
 function add_elem(i) {
   document.getElementById(imgIdPrfx + i).onclick = function() {
     var myImg=document.getElementById(imgIdPrfx + i);
-    console.log(myImg);
+    //console.log(myImg);
+    attemptCount = attemptCount+1 ;
+    document.getElementById('count').textContent= " Attemp count: " +  attemptCount;
     toggleImg(i,myImg);
   }
 }
@@ -111,10 +119,16 @@ function add_elem(i) {
 function shuffle() {
   let j;
   let t;
+  let k;
   let A = [];
 
   for (i = 0; i < (squareSize*squareSize/2); i++) {
-    A[i] = Math.ceil(Math.random() * letterend);
+    k = 1;
+    do {
+      k = Math.ceil(Math.random() * letterend);
+      console.log("Loop : "+i+ " Value: "+k + "Index of K: " + A.indexOf(k));
+    } while (A.indexOf(k) > -1)  //if this value is already there, find another
+    A[i] = k;
   }
   A.push(...A);
   console.log(A);
@@ -130,7 +144,7 @@ function shuffle() {
 //set the tile image tied to each tile
 function shuffleImg() {
   var A = shuffle();
-  for (i = 0; i < 16; i++) {
+  for (i = 0; i < squareSize*squareSize; i++) {
     let B = A[i] + letterRangeStart;
     arrayHiddenValues[i] = pathQuizImg + B + ".jpg";
   }
@@ -141,10 +155,10 @@ function reset() {
   var myImg;
 
   flippedTile = -1;  //none of the tiles are flipped
-  pairsToSolve = 8; //there are 8 unsolved pairs
+  pairsToSolve = (squareSize*squareSize)/2; // unsolved pairs
 
   shuffleImg()
-  for (i = 0; i < 16; i++) {
+  for (i = 0; i < squareSize*squareSize; i++) {
     myImg = document.getElementById(imgIdPrfx+i);
     myImg.src = blankImg; //set tile to blank image
     arrayCurrentStates[i] = 0; //reset all tiles state to 0

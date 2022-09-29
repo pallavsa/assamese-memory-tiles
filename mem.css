@@ -7,6 +7,8 @@ body {
 /* Core play area container,
 different classes depeneding on how may boxes we put */
 
+/* For a block of 4x4 */
+
 .tile_container_4 {
   overflow: hidden;
   width: 418px;
@@ -29,13 +31,58 @@ different classes depeneding on how may boxes we put */
   clear: left;
 }
 
+/* For a block of 6x6 */
+.tile_container_6 {
+  overflow: hidden;
+  width: 640px;
+  height: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid green;
+  border-radius: 5px;
+}
+.tile_6 {
+  display: block;
+  float: left;
+  border-radius: 5%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.tile_6:nth-of-type(6n + 1) {
+  clear: left;
+}
+
 .im {
   padding: 2px;
   width: 100px;
   height: 100px;
 }
 
-
+.count_container {
+  padding: 20px;
+  width: 500px;
+  height: 10vmin;
+  margin: auto;
+}
+.count_text {
+  float: left;
+  font-size: 5vmin;
+  line-height: 6vmin;
+  text-align: center;
+}
+.button {
+  float: right;
+  background-color: #008CBA; /* Blue */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 5vmin;
+}
 
 /*Overlay*/
 
