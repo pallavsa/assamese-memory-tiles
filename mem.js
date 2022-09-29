@@ -12,8 +12,6 @@ var arrayCurrentStates = [];  //running state the tiles : 0 : blank, 1 : exposed
 var flippedTile; //track the already flipped image, if none flipped, set to -1
 var pairsToSolve; //track how many pairs remain to solve
 
-let letterend = 60;
-let squareSize = 6;
 function createHtmlBlock () {
   let containerClass="tile_container_"+squareSize;
   let tileClass="tile_"+squareSize;
@@ -29,7 +27,7 @@ function createHtmlBlock () {
   </div>
   <div class="count_container">
     <div class="count_text" id="count"> Attemp count: </div>
-    <div class="button">Restart </div>
+    <div class="button" id="btnRestart">Restart </div>
   </div>
   `;
   return htmlContainer;
@@ -57,36 +55,36 @@ function toggleImg(i,myImg) {
     return;
   }
 
-  console.log(myImg.src);
-  console.log("line 3: " + arrayCurrentStates[i]);
+  //console.log(myImg.src);
+  //console.log("line 3: " + arrayCurrentStates[i]);
 
   if (arrayCurrentStates[i] == 0) {  //current tile is blank
     arrayCurrentValues[i] = arrayHiddenValues[i]; //flip the tile image
     arrayCurrentStates[i] = 1; // tile is flipped
-    console.log("State 0, flippedTile:"+flippedTile);
+    //console.log("State 0, flippedTile:"+flippedTile);
     myImg.src = arrayCurrentValues[i];
   }
 
   //check if there is a tile already flipped for matching
   if (flippedTile < 0) {  // no tile other is flipped for matching
     flippedTile = i;
-    console.log("new flip"+flippedTile);
+    //console.log("new flip"+flippedTile);
   }
   else { // compare the two flipped Tiles so long they are different
-    console.log("Comparing");
+    //console.log("Comparing");
     if (arrayCurrentValues[i] == arrayCurrentValues[flippedTile]) { // we got a match
       arrayCurrentStates[i] = 2 ;
       arrayCurrentStates[flippedTile] = 2 ;
       pairsToSolve = pairsToSolve -1 ;
       flippedTile = -1;
-      console.log("Solved");
+      //console.log("Solved");
       if (pairsToSolve == 0) {
         add_class(winMessageItem, "overlay_win_open");
       }
 
     }
     else { // no match, flip the tiles back & reset the state of the tiles
-      console.log("Failed");
+      //console.log("Failed");
       setTimeout(function() {
         arrayCurrentStates[i] = 0 ;
         arrayCurrentValues[i] = blankImg;
@@ -126,12 +124,12 @@ function shuffle() {
     k = 1;
     do {
       k = Math.ceil(Math.random() * letterend);
-      console.log("Loop : "+i+ " Value: "+k + "Index of K: " + A.indexOf(k));
+    //  console.log("Loop : "+i+ " Value: "+k + "Index of K: " + A.indexOf(k));
     } while (A.indexOf(k) > -1)  //if this value is already there, find another
     A[i] = k;
   }
   A.push(...A);
-  console.log(A);
+  //console.log(A);
   for (i = 0; i < squareSize*squareSize; i++) {
     j = Math.floor(Math.random() * (i + 1));
     t = A[i];
@@ -156,7 +154,8 @@ function reset() {
 
   flippedTile = -1;  //none of the tiles are flipped
   pairsToSolve = (squareSize*squareSize)/2; // unsolved pairs
-
+  attemptCount =0;
+  document.getElementById('count').textContent= " Attemp count: " +  attemptCount;
   shuffleImg()
   for (i = 0; i < squareSize*squareSize; i++) {
     myImg = document.getElementById(imgIdPrfx+i);
@@ -173,6 +172,9 @@ function reset() {
 //create htmlContainer
 document.body.innerHTML = createHtmlBlock ();
 //add reset function
+document.getElementById("btnRestart").onclick = function() {
+  reset();
+};
 document.getElementById(winMessageItem).onclick = function() {
   reset();
 };
