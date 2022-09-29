@@ -123,7 +123,7 @@ function shuffle() {
   for (i = 0; i < (squareSize*squareSize/2); i++) {
     k = 1;
     do {
-      k = Math.ceil(Math.random() * letterend);
+      k = Math.ceil(Math.random() * letterRangeEnd);
     //  console.log("Loop : "+i+ " Value: "+k + "Index of K: " + A.indexOf(k));
     } while (A.indexOf(k) > -1)  //if this value is already there, find another
     A[i] = k;
@@ -169,6 +169,18 @@ function reset() {
 }
 
 //actual flow starts here
+
+//Validate the letter range & sqaure size
+if (squareSize != 4 && squareSize !=6){
+  squareSize =6; //default square size in 6x6
+}
+if (letterRangeEnd > 62 ){
+  letterRangeEnd=62;  // We have only 62 images
+}
+if (letterRangeStart > (letterRangeEnd - ((squareSize*squareSize)/2))){
+  letterRangeStart = (letterRangeEnd - ((squareSize*squareSize)/2));
+}
+
 //create htmlContainer
 document.body.innerHTML = createHtmlBlock ();
 //add reset function
@@ -178,5 +190,9 @@ document.getElementById("btnRestart").onclick = function() {
 document.getElementById(winMessageItem).onclick = function() {
   reset();
 };
+
+
+
+
 //reset counters & tiles
 reset();
